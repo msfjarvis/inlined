@@ -1,4 +1,4 @@
-package dev.msfjarvis.inlined
+package dev.msfjarvis.inlined.internal
 
 /**
  * Common utility code like shared regex patterns.

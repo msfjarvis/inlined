@@ -1,6 +1,6 @@
 package dev.msfjarvis.inlined.static
 
-import dev.msfjarvis.inlined.Utils
+import dev.msfjarvis.inlined.internal.Utils
 import java.util.regex.Pattern
 
 /**
