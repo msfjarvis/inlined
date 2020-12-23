@@ -1,25 +1,58 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-  id("org.jetbrains.kotlin.jvm") version "1.4.30-M1"
-  `java-library`
+    kotlin("multiplatform")
 }
 
-repositories {
-  jcenter()
-  maven { setUrl("https://dl.bintray.com/kotlin/kotlin-eap") }
-  maven { setUrl("https://kotlin.bintray.com/kotlinx") }
-}
+group = "dev.msfjarvis.inlined"
+version = "1.0-SNAPSHOT"
 
-dependencies {
-  implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
-  implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-  testImplementation("org.jetbrains.kotlin:kotlin-test")
-  testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
-}
+kotlin {
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = "1.8"
+        }
+        testRuns["test"].executionTask.configure {
+            useJUnit()
+        }
+    }
+    js(LEGACY) {
+        browser {
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    webpackConfig.cssSupport.enabled = true
+                }
+            }
+        }
+    }
+    val hostOs = System.getProperty("os.name")
+    val isMingwX64 = hostOs.startsWith("Windows")
+    val nativeTarget = when {
+        hostOs == "Mac OS X" -> macosX64("native")
+        hostOs == "Linux" -> linuxX64("native")
+        isMingwX64 -> mingwX64("native")
+        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
+    }
 
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-  jvmTarget = JavaVersion.VERSION_1_8.toString()
-  freeCompilerArgs = freeCompilerArgs + listOf("-Xinline-classes")
+    sourceSets {
+        val commonMain by getting
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test-common"))
+            }
+        }
+        val jvmMain by getting
+        val jvmTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
+            }
+        }
+        val jsMain by getting
+        val jsTest by getting {
+            dependencies {
+                implementation(kotlin("test-js"))
+            }
+        }
+        val nativeMain by getting
+        val nativeTest by getting
+    }
 }

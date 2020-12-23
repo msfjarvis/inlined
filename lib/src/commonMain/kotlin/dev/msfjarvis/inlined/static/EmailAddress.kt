@@ -1,7 +1,6 @@
 package dev.msfjarvis.inlined.static
 
 import dev.msfjarvis.inlined.internal.Utils
-import java.util.regex.Pattern
 
 /**
  * [EmailAddress] is an inline representation of a [String]-backed email address. Instances can only be constructed
@@ -17,7 +16,7 @@ inline class EmailAddress private constructor(val value: String) {
      * throws [IllegalArgumentException] otherwise.
      */
     fun of(value: String): EmailAddress {
-      require(Pattern.matches(Utils.EMAIL_REGEX, value)) { "'$value' is not a valid email" }
+      require(Utils.EMAIL_REGEX.matches(value)) { "'$value' is not a valid email" }
       return EmailAddress(value)
     }
 
