@@ -6,6 +6,10 @@
       <module name="inlined.commonTest" target="1.8" />
       <module name="inlined.jvmMain" target="1.8" />
       <module name="inlined.jvmTest" target="1.8" />
+      <module name="inlined.lib.commonMain" target="1.8" />
+      <module name="inlined.lib.commonTest" target="1.8" />
+      <module name="inlined.lib.jvmMain" target="1.8" />
+      <module name="inlined.lib.jvmTest" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

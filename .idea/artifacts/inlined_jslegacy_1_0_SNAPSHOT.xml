@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="inlined-jslegacy-1.0-SNAPSHOT">
+    <output-path>$PROJECT_DIR$/inlined/build/libs</output-path>
+    <root id="archive" name="inlined-jslegacy-1.0-SNAPSHOT.jar">
+      <element id="module-output" name="inlined.inlined.jsMain" />
+    </root>
+  </artifact>
+</component>

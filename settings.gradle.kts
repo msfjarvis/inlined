@@ -6,4 +6,4 @@ pluginManagement {
   }
 }
 rootProject.name = "inlined"
-include("lib")
+include("inlined")
