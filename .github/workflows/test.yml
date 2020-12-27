@@ -1,0 +1,29 @@
+name: Run unit tests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  unit-tests:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f
+
+    - name: Run unit tests
+      uses: burrunan/gradle-cache-action@03c71a8ba93d670980695505f48f49daf43704a6
+      with:
+        arguments: allTest
+
+    - name: (Fail-only) upload test report
+      if: failure()
+      uses: actions/upload-artifact@726a6dcd0199f578459862705eed35cda05af50b
+      with:
+          name: Test report
+          path: inlined/build/reports
