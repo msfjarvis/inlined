@@ -18,15 +18,6 @@ kotlin {
       useJUnit()
     }
   }
-  js(BOTH) {
-    browser {
-      testTask {
-        useKarma {
-          useChromeHeadless()
-        }
-      }
-    }
-  }
   val hostOs = System.getProperty("os.name")
   val isMingwX64 = hostOs.startsWith("Windows")
   when {
@@ -51,11 +42,6 @@ kotlin {
     val jvmTest by getting {
       dependencies {
         implementation(kotlin("test-junit"))
-      }
-    }
-    val jsTest by getting {
-      dependencies {
-        implementation(kotlin("test-js"))
       }
     }
   }
